@@ -11,6 +11,7 @@ require __DIR__ . "/pdo.php";
     $query->bindValue(":password", $_POST["password"],PDO::PARAM_STR);
     
     $result=$query->execute();
+    header("Location: http://localhost/ventacar/connexion.php");
 
     } ;
 
