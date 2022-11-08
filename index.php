@@ -1,5 +1,5 @@
 <?php
-<<<<<<< HEAD
+
 require __DIR__."/pdo.php";
 // JOIN cars ON listcars.id_cars=cars.id
 $query= $pdo->prepare("SELECT * FROM `listcars`JOIN cars ON listcars.id_cars=cars.id ");
