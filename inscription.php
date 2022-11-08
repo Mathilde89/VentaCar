@@ -1,5 +1,7 @@
 <?php
 
+require __DIR__."/pdo.php";
+
  // Insert la personne qui vient de s'inscrire dans la base de donnée
  if(isset($_POST["submitInscription"])){
     $query= $pdo->prepare("INSERT INTO `users` (`name`, `firstname`, `email`, `password`) VALUES (:name, :firstname, :email, :password)");
@@ -25,7 +27,7 @@
 </head>
 <body>
     <h2>Inscription au site VentaCar</h2>
-    <form action="connexion.php" method="post">
+    <form action="inscription.php" method="post">
         <label for="firstname">Prénom</label>
         <input type="text" id="firstname" name="firstname">
 

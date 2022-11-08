@@ -38,7 +38,6 @@ function verifconnexion(){
                     var_dump($_SESSION);
                
                     $verif_ok=true;
-                    
                     header("Location: http://localhost/ventacar/index.php");
                 } 
                 
