@@ -1,12 +1,12 @@
 <?php
 
 class ListCars{
- protected float $startingprice;
+ protected int $startingprice;
  protected string $startdate;
  protected string $enddate;
- protected float $sellingprice;
+ protected int $sellingprice;
 
- protected function __construct(float $startingprice, string $startdate, string $enddate, float $sellingprice)
+ protected function __construct(int $startingprice, string $startdate, string $enddate, int $sellingprice)
  {
     $this->sellingprice=$startingprice;
     $this->startdate=$startdate;
