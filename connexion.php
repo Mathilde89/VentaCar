@@ -2,24 +2,57 @@
 var_dump($_POST);
 
 function verifconnexion(){
-       
-   
-    if($_SERVER["REQUEST_METHOD"] == "POST") {
-        if ($_POST["password"]=="titi" && $_POST["email"]=="titi@titi.com"){
-            // header("Location: http://localhost/ventacar/acceuil");
-            return true;
-          
-        } else {
-            return false;
-          
-        }
+    $verif_ok=false;
+    require __DIR__."/pdo.php";
+
+    
+    if(isset($_POST["submitConnexion"])){
+
+        // Fonction de vérification du bon mot de passe
+    
+            // Reccupère tous les users
+        $query2=$pdo->prepare("SELECT * FROM users");
+        $query2->execute();
+        $users=$query2->fetchAll(PDO::FETCH_ASSOC);
+        // var_dump($users);
+
+            // Pour tester si bon mot de passe - A modifier après pour crypter le mdp
+        foreach($users as $key => $value){
+            
+            if ($value["email"]==$_POST["email"] && $value["password"]==$_POST["password"]){
+                           
+                
+                // Démarre une nouvelle session
+                    session_start(); 
+                    
+                    //Mets à dispo les informations de connexion
+                    $_SESSION['id'] = $value["id"];
+                    $_SESSION['nom'] = $value["name"];
+                    $_SESSION['prenom'] = $value["firstname"];
+                    $_SESSION['email'] = $value["email"];
+                    $_SESSION['password'] = $value["password"];
+                    
+                    $id_session = session_id();
+                    var_dump($_COOKIE['PHPSESSID']);
+                    var_dump($id_session);
+                    var_dump($_SESSION);
+               
+                    $verif_ok=true;
+                    
+                    header("Location: http://localhost/ventacar/index.php");
+                } 
+                
+            }
+            return $verif_ok;
+
     }
+
+
+
 };
-verifconnexion();
 
 
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -31,9 +64,11 @@ verifconnexion();
 </head>
 <body>
     <h2>Connexion au site VentaCar</h2>
-    <?php if(!verifconnexion()){?>
+     <?php if(!verifconnexion()){?>
         <p>Mot de passe ou email erronné</p>
         <?php }; ?>
+        
+   
     <form action="connexion.php" method="post">
       
         <label for="email">Email</label>
