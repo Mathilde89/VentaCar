@@ -19,11 +19,13 @@ if(isset($_POST["submitCar"])){
 if(isset($_POST["submitAnnonce"])){
     $startdate = date('Y-m-d');
     var_dump($startdate);
-    $query4= $pdo->prepare("INSERT INTO `listcars`(`startingprice`,`startdate`,`enddate`,`id_cars`) VALUES (:startingprice,:startdate,:enddate,6)");
+    $query4= $pdo->prepare("INSERT INTO `listcars`(`startingprice`,`startdate`,`enddate`,`sellingprice`, `id_cars`) VALUES (:startingprice,:startdate,:enddate,:startingprice,6)");
     $query4->bindValue(":startingprice", $_POST["startingprice"],PDO::PARAM_INT);
     $query4->bindValue(":enddate", $_POST["enddate"],PDO::PARAM_STR);
     $query4->bindValue(":startdate", $startdate ,PDO::PARAM_STR);
    
+    
+
     $result4=$query4->execute();
     var_dump($result4);
 
@@ -36,7 +38,7 @@ if(isset($_POST["submitAnnonce"])){
        
    
         if($_SERVER["REQUEST_METHOD"] === "POST") {
-            if ($_POST["submitAnnonce"]){
+            if (isset($_POST["submitAnnonce"])){
                 
                 return true;
               

@@ -7,11 +7,12 @@ $query->execute();
 $listcars = $query->fetchAll(PDO::FETCH_ASSOC);
 var_dump($listcars)
 
-?>
 
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -19,14 +20,6 @@ var_dump($listcars)
     <title>Document</title>
 </head>
 <body>
-<nav>
-        <ul>
-            <?php
-            include __DIR__ . "/menu.php";
-            afficherMenu($menu);
-            ?>
-        </ul>
-    </nav>
     
 <h1>Nos annonces</h1>
 
@@ -46,4 +39,3 @@ var_dump($listcars)
 
 </body>
 </html>
-
