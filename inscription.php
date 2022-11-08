@@ -1,22 +1,18 @@
 <?php
 
-require __DIR__."/pdo.php";
-
-
-if(isset($_POST["submitInscription"])){
-
-    $query= $pdo->prepare("INSERT INTO `users`(`name`, `firstname`, `email`, `password`) VALUES (:name,:firstname,:email,:password)");
+ // Insert la personne qui vient de s'inscrire dans la base de donnée
+ if(isset($_POST["submitInscription"])){
+    $query= $pdo->prepare("INSERT INTO `users` (`name`, `firstname`, `email`, `password`) VALUES (:name, :firstname, :email, :password)");
     $query->bindValue(":name", $_POST["name"],PDO::PARAM_STR);
     $query->bindValue(":firstname", $_POST["firstname"],PDO::PARAM_STR);
     $query->bindValue(":email", $_POST["email"],PDO::PARAM_STR);
     $query->bindValue(":password", $_POST["password"],PDO::PARAM_STR);
     
     $result=$query->execute();
-    var_dump($result);
-    
-    
-    };
-    
+
+    } ;
+
+
 ?>
 
 <!DOCTYPE html>

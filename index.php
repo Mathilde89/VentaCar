@@ -1,4 +1,5 @@
 <?php
+<<<<<<< HEAD
 require __DIR__."/pdo.php";
 // JOIN cars ON listcars.id_cars=cars.id
 $query= $pdo->prepare("SELECT * FROM `listcars`JOIN cars ON listcars.id_cars=cars.id ");
@@ -38,3 +39,14 @@ var_dump($listcars)
 
 </body>
 </html>
+=======
+
+//Reccupère les informations de l'utilisateur connecté
+session_start();
+ $id_session = session_id();
+ var_dump($_COOKIE['PHPSESSID']);
+ var_dump($id_session);
+var_dump($_SESSION);
+
+ ?>
+>>>>>>> origin/math
