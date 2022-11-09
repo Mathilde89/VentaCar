@@ -34,10 +34,10 @@ function verifconnexion($pdo)
             // var_dump($_SESSION);
 
             header("Location: http://localhost/ventacar/index.php");
-       
+
             // echo "Le mot de passe est valide";
         } else {
-                       
+
             echo "Email ou mot de passe invalide";
         }
     } else {
@@ -60,14 +60,12 @@ function verifconnexion($pdo)
 
 <body>
     <header>
-        <nav>
-            <ul>
-                <?php
-                include __DIR__ . "/menu.php";
-                afficherMenu($menu);
-                ?>
-            </ul>
-        </nav>
+
+        <?php
+        include __DIR__ . "/menu.php";
+        afficherMenu($menu);
+        ?>
+
     </header>
 
     <h2>Connexion au site VentaCar</h2>

@@ -3,20 +3,19 @@
 require __DIR__ . "/pdo.php";
 
 // Insert la personne qui vient de s'inscrire dans la base de donnée
-if(isset($_POST["submitInscription"])){
+if (isset($_POST["submitInscription"])) {
     //Permet de crypter le mot de passe
-    $passwordcrypte=password_hash($_POST["password"], PASSWORD_DEFAULT);
+    $passwordcrypte = password_hash($_POST["password"], PASSWORD_DEFAULT);
 
-    $query= $pdo->prepare("INSERT INTO `users` (`name`, `firstname`, `email`, `password`) VALUES (:name, :firstname, :email, :password)");
-    $query->bindValue(":name", $_POST["name"],PDO::PARAM_STR);
-    $query->bindValue(":firstname", $_POST["firstname"],PDO::PARAM_STR);
-    $query->bindValue(":email", $_POST["email"],PDO::PARAM_STR);
-    $query->bindValue(":password", $passwordcrypte,PDO::PARAM_STR);
-    
-    $result=$query->execute();
+    $query = $pdo->prepare("INSERT INTO `users` (`name`, `firstname`, `email`, `password`) VALUES (:name, :firstname, :email, :password)");
+    $query->bindValue(":name", $_POST["name"], PDO::PARAM_STR);
+    $query->bindValue(":firstname", $_POST["firstname"], PDO::PARAM_STR);
+    $query->bindValue(":email", $_POST["email"], PDO::PARAM_STR);
+    $query->bindValue(":password", $passwordcrypte, PDO::PARAM_STR);
+
+    $result = $query->execute();
     header("Location: http://localhost/ventacar/connexion.php");
-
-    } ;
+};
 
 
 ?>
@@ -34,16 +33,14 @@ if(isset($_POST["submitInscription"])){
 
 <body>
     <header>
-        <nav>
-            <ul>
-                <?php
-                include __DIR__ . "/menu.php";
-                afficherMenu($menu);
-                ?>
-            </ul>
-        </nav>
+
+        <?php
+        include __DIR__ . "/menu.php";
+        afficherMenu($menu);
+        ?>
+
     </header>
-    
+
     <h2>Inscription au site VentaCar</h2>
     <form action="inscription.php" method="post">
         <label for="firstname">Prénom</label>

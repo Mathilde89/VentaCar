@@ -1,8 +1,18 @@
 nav {
-  display: flex;
   background-color: black;
-}
-
-nav:last-child {
   display: flex;
+}
+nav ul {
+  display: flex;
+  width: 100%;
+  align-items: center;
+}
+nav ul li {
+  font-family: "Times New Roman", Times, serif;
+  width: 30%;
+  display: flex;
+  flex-direction: row;
+  list-style: none;
+  text-decoration: none;
+  justify-content: space-around;
 }/*# sourceMappingURL=style.css.map */

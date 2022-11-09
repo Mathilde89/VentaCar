@@ -1,5 +1,5 @@
 <?php
-session_start();
+// session_start();
 // var_dump($_SESSION);
 
 require __DIR__ . "/pdo.php";
@@ -23,19 +23,13 @@ $listcars = $query->fetchAll(PDO::FETCH_ASSOC);
 
 <body>
     <header>
-
-        <nav>
-            <img src="img/VentaCar.png" width="300px" alt="">
-            <ul>
-                <?php
-                include __DIR__ . "/menu.php";
-                afficherMenu($menu);
-                ?>
-            </ul>
-        </nav>
+        <?php
+        include __DIR__ . "/menu.php";
+        afficherMenu($menu);
+        ?>
 
     </header>
-    
+
     <h1>Nos annonces</h1>
 
     <?php foreach ($listcars as $key => $listcar) { ?>
@@ -57,14 +51,13 @@ $listcars = $query->fetchAll(PDO::FETCH_ASSOC);
 </html>
 
 <style>
-    nav{
+    nav {
         display: flex;
         background-color: black;
-        }
+    }
 
 
-    nav:last-child{
+    nav:last-child {
         display: flex;
     }
-       
 </style>
