@@ -1,6 +1,7 @@
 <?php 
 require __DIR__."/pdo.php";
 require __DIR__."/session.php";
+var_dump($_SESSION["id"]);
 
 if (isset($_GET["id"])){
 
@@ -22,7 +23,7 @@ if (isset($_GET["id"])){
         $query3->bindValue(":auctionprice", $_POST["auctionprice"],PDO::PARAM_INT);
         $query3->bindValue(":auctiondate",$startDatePost,PDO::PARAM_STR);
         $query3->bindValue(":listcars_id", $_GET["id"],PDO::PARAM_INT);
-        $query3->bindValue(":users_id", $_POST["users_id"],PDO::PARAM_INT);
+        $query3->bindValue(":users_id", $_SESSION["id"],PDO::PARAM_INT);
         $postAuction=$query3->execute();
         
     };
@@ -111,8 +112,7 @@ if (isset($_GET["id"])){
                 <input type="text" id="auctionprice" name="auctionprice">
 
 
-                <label for="users_id">User ID:</label>
-                <input type="text" id="users_id" name="users_id">
+
 
 
 
