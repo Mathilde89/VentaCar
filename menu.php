@@ -25,7 +25,7 @@ require __DIR__."/session.php";
 
 function afficherMenu($menu)
 {
-    "<nav>
+    echo "<nav>
     <img src='img/VentaCar.png' width='300px' alt=''>
     <ul>";
     foreach ($menu as $key => $value) {
@@ -37,8 +37,14 @@ function afficherMenu($menu)
 ?>
 
 <style>
+    nav{
+    display: flex
+    }
     li{
+        display: flex;
+        flex-direction: row;
         list-style: none;
+        text-decoration: none;
     }
   
 </style>
