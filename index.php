@@ -7,7 +7,7 @@ require __DIR__ . "/pdo.php";
 $query = $pdo->prepare("SELECT listcars.startingprice,listcars.id,listcars.startdate,listcars.enddate,listcars.sellingprice,cars.model,cars.powerful,cars.year,cars.description FROM `listcars`JOIN cars ON listcars.id_cars=cars.id");
 $query->execute();
 $listcars = $query->fetchAll(PDO::FETCH_ASSOC);
-// var_dump($listcars)
+
 
 ?>
 <!DOCTYPE html>

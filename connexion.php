@@ -1,51 +1,50 @@
 <?php
 
 
+require __DIR__ . "/pdo.php";
 
-function verifconnexion()
+function verifconnexion($pdo)
 {
-    $verif_ok = "faux";
-    require __DIR__ . "/pdo.php";
+    // Reccupère tous les users
+    $query2 = $pdo->prepare("SELECT * FROM `users` WHERE `email` = :email");
+    $query2->bindValue(":email", $_POST["email"], PDO::PARAM_STR);
+    $query2->execute();
+    $user = $query2->fetch(PDO::FETCH_ASSOC);
+    //Permet de tester si le mail est dans la base
+    if ($user) {
 
 
-    if (isset($_POST["submitConnexion"])) {
 
-        // Fonction de vérification du bon mot de passe
+        // Pour tester si bon mot de passe 
 
-        // Reccupère tous les users
-        $query2 = $pdo->prepare("SELECT * FROM `users` WHERE `email` = :email");
-        $query2->bindValue(":email", $_POST["email"],PDO::PARAM_STR);
-        $query2->execute();
-        $user = $query2->fetch(PDO::FETCH_ASSOC);
-        // var_dump($user);
+        //Permet de decrypter le mot de passe
+        $hash = $user["password"];
 
-        // Pour tester si bon mot de passe - A modifier après pour crypter le mdp
-      
-        if ($user["password"] == $_POST["password"]) {
+        if (password_verify($_POST["password"], $hash)) {
 
-                // Démarre une nouvelle session
-              
+            //Mets à dispo les informations de connexion pour toutes les autres pages
+            $_SESSION['id'] = $user["id"];
+            $_SESSION['nom'] = $user["name"];
+            $_SESSION['prenom'] = $user["firstname"];
+            $_SESSION['email'] = $user["email"];
 
-                //Mets à dispo les informations de connexion
-                $_SESSION['id'] = $user["id"];
-                $_SESSION['nom'] = $user["name"];
-                $_SESSION['prenom'] = $user["firstname"];
-                $_SESSION['email'] = $user["email"];
-                $_SESSION['password'] = $user["password"];
+            $id_session = session_id();
+            // var_dump($_COOKIE['PHPSESSID']);
+            // var_dump($id_session);
+            // var_dump($_SESSION);
 
-                $id_session = session_id();
-                // var_dump($_COOKIE['PHPSESSID']);
-                // var_dump($id_session);
-                var_dump($_SESSION);
-
-                header("Location: http://localhost/ventacar/index.php");
-                $verif_ok = true;
-            } 
+            header("Location: http://localhost/ventacar/index.php");
+       
+            // echo "Le mot de passe est valide";
+        } else {
+                       
+            echo "Email ou mot de passe invalide";
         }
-        return $verif_ok;
-    };
+    } else {
+        echo "Email ou mot de passe invalide";
+    }
+};
 
-// var_dump(verifconnexion());
 ?>
 
 <!DOCTYPE html>
@@ -70,10 +69,11 @@ function verifconnexion()
             </ul>
         </nav>
     </header>
-    
+
     <h2>Connexion au site VentaCar</h2>
-    <?php if ( verifconnexion()=="null" || verifconnexion()=="faux" ) { ?>
-        <p>Mot de passe ou email erronné</p>
+    <?php if (isset($_POST["submitConnexion"])) {
+        verifconnexion($pdo) ?>
+
     <?php }; ?>
 
 
