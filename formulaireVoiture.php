@@ -1,3 +1,7 @@
+<?php
+require __DIR__."/session.php";
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 

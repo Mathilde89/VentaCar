@@ -1,5 +1,6 @@
 <?php 
-session_start();
+
+require __DIR__."/session.php";
 
     if(!isset($_SESSION["id"])){
         $menu = [

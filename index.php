@@ -3,6 +3,8 @@
 // var_dump($_SESSION);
 
 require __DIR__ . "/pdo.php";
+require __DIR__."/session.php";
+
 // JOIN cars ON listcars.id_cars=cars.id
 $query = $pdo->prepare("SELECT listcars.startingprice,listcars.id,listcars.startdate,listcars.enddate,listcars.sellingprice,cars.model,cars.powerful,cars.year,cars.description FROM `listcars`JOIN cars ON listcars.id_cars=cars.id");
 $query->execute();
