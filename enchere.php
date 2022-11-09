@@ -1,8 +1,8 @@
-<?php 
-require __DIR__."/pdo.php";
-require __DIR__."/session.php";
+<?php require __DIR__ . "/pdo.php";
+require __DIR__ . "/session.php";
+var_dump($_SESSION["id"]);
 
-if (isset($_GET["id"])){
+if (isset($_GET["id"])) {
 
 
     // JOIN users ON auctions.users_id=users.id JOIN listcars ON auctions.listcars_id=listcars.id_cars
@@ -10,25 +10,20 @@ if (isset($_GET["id"])){
     $query->bindValue(':id', $_GET["id"], PDO::PARAM_INT);
     $query->execute();
     $cars = $query->fetch(PDO::FETCH_ASSOC);
-    
 
 
-    if(isset($_POST["submitAuction"])){
-        $startDatePost= date('Y-m-d');
 
-    
-        $query3= $pdo->prepare("INSERT INTO `auctions` (`auctionprice`, `auctiondate`,`listcars_id`,`users_id` ) VALUES (:auctionprice, :auctiondate, :listcars_id, :users_id)");
     if (isset($_POST["submitAuction"])) {
         $startDatePost = date('Y-m-d');
 
+
         $query3 = $pdo->prepare("INSERT INTO `auctions` (`auctionprice`, `auctiondate`,`listcars_id`,`users_id` ) VALUES (:auctionprice, :auctiondate, :listcars_id, :users_id)");
         //INSERT INTO `auctions` (`id`, `auctionprice`, `auctiondate`, `listcars_id`, `users_id`) VALUES (NULL, ':auctionprice', 'auctiondate', ' :listcars_id', ':users_id');
-        $query3->bindValue(":auctionprice", $_POST["auctionprice"],PDO::PARAM_INT);
-        $query3->bindValue(":auctiondate",$startDatePost,PDO::PARAM_STR);
-        $query3->bindValue(":listcars_id", $_GET["id"],PDO::PARAM_INT);
-        $query3->bindValue(":users_id", $_POST["users_id"],PDO::PARAM_INT);
-        $postAuction=$query3->execute();
-        
+        $query3->bindValue(":auctionprice", $_POST["auctionprice"], PDO::PARAM_INT);
+        $query3->bindValue(":auctiondate", $startDatePost, PDO::PARAM_STR);
+        $query3->bindValue(":listcars_id", $_GET["id"], PDO::PARAM_INT);
+        $query3->bindValue(":users_id", $_SESSION["id"], PDO::PARAM_INT);
+        $postAuction = $query3->execute();
     };
     $query2 = $pdo->prepare("SELECT `auctionprice`,`auctiondate`,`listcars_id`,`users_id`
     FROM `auctions`
@@ -42,9 +37,6 @@ if (isset($_GET["id"])){
     $longeur = count($auctions);
 
 
-
-
-
     function getNoAuction()
     {
         echo '<h2>Aucun offre proposer</h2>';
@@ -54,12 +46,8 @@ if (isset($_GET["id"])){
     echo "erreur";
 }
 
-
-
-
-
-
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -73,12 +61,16 @@ if (isset($_GET["id"])){
 
 <body>
 
-
-    <?php
-    include __DIR__ . "/menu.php";
-    afficherMenu($menu);
-    ?>
-
+    <header>
+        <nav>
+            <ul>
+                <?php
+                include __DIR__ . "/menu.php";
+                afficherMenu($menu);
+                ?>
+            </ul>
+        </nav>
+    </header>
 
     <ul>
         <li>Prix de départ: <?= $cars["startingprice"] ?></li>
@@ -105,8 +97,7 @@ if (isset($_GET["id"])){
             <input type="text" id="auctionprice" name="auctionprice">
 
 
-            <label for="users_id">User ID:</label>
-            <input type="text" id="users_id" name="users_id">
+
 
 
 
