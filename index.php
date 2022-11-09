@@ -1,4 +1,6 @@
 <?php
+session_start();
+var_dump($_SESSION);
 
 require __DIR__."/pdo.php";
 // JOIN cars ON listcars.id_cars=cars.id

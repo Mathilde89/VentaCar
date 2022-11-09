@@ -1,5 +1,6 @@
 <?php
-var_dump($_POST);
+
+
 
 function verifconnexion()
 {
@@ -12,39 +13,39 @@ function verifconnexion()
         // Fonction de vérification du bon mot de passe
 
         // Reccupère tous les users
-        $query2 = $pdo->prepare("SELECT * FROM users");
+        $query2 = $pdo->prepare("SELECT * FROM `users` WHERE `email` = :email");
+        $query2->bindValue(":email", $_POST["email"],PDO::PARAM_STR);
         $query2->execute();
-        $users = $query2->fetchAll(PDO::FETCH_ASSOC);
-        // var_dump($users);
+        $user = $query2->fetch(PDO::FETCH_ASSOC);
+        // var_dump($user);
 
         // Pour tester si bon mot de passe - A modifier après pour crypter le mdp
-        foreach ($users as $key => $value) {
-
-            if ($value["email"] == $_POST["email"] && $value["password"] == $_POST["password"]) {
+      
+        if ($user["password"] == $_POST["password"]) {
 
                 // Démarre une nouvelle session
-                session_start();
+              
 
                 //Mets à dispo les informations de connexion
-                $_SESSION['id'] = $value["id"];
-                $_SESSION['nom'] = $value["name"];
-                $_SESSION['prenom'] = $value["firstname"];
-                $_SESSION['email'] = $value["email"];
-                $_SESSION['password'] = $value["password"];
+                $_SESSION['id'] = $user["id"];
+                $_SESSION['nom'] = $user["name"];
+                $_SESSION['prenom'] = $user["firstname"];
+                $_SESSION['email'] = $user["email"];
+                $_SESSION['password'] = $user["password"];
 
                 $id_session = session_id();
                 // var_dump($_COOKIE['PHPSESSID']);
                 // var_dump($id_session);
-                // var_dump($_SESSION);
+                var_dump($_SESSION);
 
                 header("Location: http://localhost/ventacar/index.php");
                 $verif_ok = true;
             } 
         }
         return $verif_ok;
-    }
-};
-var_dump(verifconnexion());
+    };
+
+// var_dump(verifconnexion());
 ?>
 
 <!DOCTYPE html>

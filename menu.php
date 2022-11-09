@@ -1,5 +1,7 @@
 <?php 
-    if($id_session = session_id()=== null){
+session_start();
+
+    if(!isset($_SESSION["id"])){
         $menu = [
     
             "index.php" => "Acceuil",
@@ -12,7 +14,8 @@
         $menu = [
             "index.php" => "Acceuil",
             "formulaireVoiture.php" => "Enregistrer ma voiture",
-            "formulaireAnnonce.php" => "Créer une annonce"
+            "formulaireAnnonce.php" => "Créer une annonce",
+            "deconnexion.php" => "Se déconnecter"
         ];
         
     }
