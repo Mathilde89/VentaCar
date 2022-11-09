@@ -1,14 +1,13 @@
 <?php 
 require __DIR__."/pdo.php";
 if (isset($_GET["id"])){
-
+var_dump($_GET);
 
     // JOIN users ON auctions.users_id=users.id JOIN listcars ON auctions.listcars_id=listcars.id_cars
     $query= $pdo->prepare("SELECT * FROM `listcars` WHERE id=:id");
     $query->bindValue(':id',$_GET["id"],PDO::PARAM_INT);
     $query->execute();
-    $cars = $query->fetchAll(PDO::FETCH_ASSOC);
-   
+    $cars = $query->fetch(PDO::FETCH_ASSOC);
     
     
 
@@ -29,6 +28,12 @@ if (isset($_GET["id"])){
 <body>
     
 
+    
+        <ul>
+            <li>Prix de départ: <?=$cars["startingprice"]?></li>
+            <li>Début de l'enchere: <?=$cars["startdate"]?></li>
+            <li>Fin de l'enchere: <?=$cars["enddate"]?></li>
+            <li>Prix de reserve: <?=$cars["sellingprice"]?></li>
 
         <ul>
             <?php foreach($cars as $key => $car){ ?>
