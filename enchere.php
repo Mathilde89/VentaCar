@@ -1,5 +1,7 @@
 <?php 
 require __DIR__."/pdo.php";
+require __DIR__."/session.php";
+
 if (isset($_GET["id"])){
 
 

@@ -1,6 +1,7 @@
 <?php
 
 require __DIR__ . "/pdo.php";
+require __DIR__."/session.php";
 
 // Insert la personne qui vient de s'inscrire dans la base de donnée
 if(isset($_POST["submitInscription"])){
