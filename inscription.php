@@ -15,7 +15,7 @@ if (isset($_POST["submitInscription"])) {
     $query->bindValue(":password", $passwordcrypte, PDO::PARAM_STR);
 
     $result = $query->execute();
-    header("Location: http://localhost/ventacar/connexion.php");
+    header("Location: connexion.php");
 };
 
 
