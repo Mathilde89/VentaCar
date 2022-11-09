@@ -2,6 +2,12 @@
 var_dump($_POST);
 require __DIR__."/pdo.php";
 
+$query2=$pdo->prepare("SELECT * FROM users WHERE id = :id_connecté");
+$query2->bindValue(":id_connecté", $_SESSION['id'],PDO::PARAM_INT);
+$query2->execute();
+$users=$query2->fetch(PDO::FETCH_ASSOC);
+var_dump($users);
+
 if(isset($_POST["submitCar"])){
 
     $query3= $pdo->prepare("INSERT INTO `cars`(`model`, `powerful`, `year`, `description`,`user_id`) VALUES (:model,:powerful,:annee,:description,3)");
@@ -19,10 +25,11 @@ if(isset($_POST["submitCar"])){
 if(isset($_POST["submitAnnonce"])){
     $startdate = date('Y-m-d');
     var_dump($startdate);
-    $query4= $pdo->prepare("INSERT INTO `listcars`(`startingprice`,`startdate`,`enddate`,`sellingprice`, `id_cars`) VALUES (:startingprice,:startdate,:enddate,:startingprice,6)");
+    $query4= $pdo->prepare("INSERT INTO `listcars`(`startingprice`,`startdate`,`enddate`,`sellingprice`, `id_cars`) VALUES (:startingprice,:startdate,:enddate,:startingprice,:id_cars)");
     $query4->bindValue(":startingprice", $_POST["startingprice"],PDO::PARAM_INT);
     $query4->bindValue(":enddate", $_POST["enddate"],PDO::PARAM_STR);
     $query4->bindValue(":startdate", $startdate ,PDO::PARAM_STR);
+    $query4->bindValue(":id_cars", $_POST["id_cars"] ,PDO::PARAM_INT);
    
     
 
@@ -74,6 +81,13 @@ if(isset($_POST["submitAnnonce"])){
 
 <section>
     <form action="formulaireAnnonce.php" method="POST">
+    <select name="id_cars" placeholder="cars" id="">
+            <?php foreach($cars as $key =>$value){?>
+
+                <option name="id_cars" value="<?=$value["id"] ?>"><?php echo $value["model"]?></option>
+                <?php };?>
+
+        </select> 
      <input placeholder="Prix de départ" type="text" name="startingprice">
      <label for="">Fin des enchères <input type="date" name="enddate"></label>
      <input type="submit" value="Poster mon annonce" name="submitAnnonce">

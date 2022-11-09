@@ -31,3 +31,9 @@ function afficherMenu($menu)
     }
 }
 ?>
+
+<style>
+    li{
+        list-style: none;
+    }
+</style>

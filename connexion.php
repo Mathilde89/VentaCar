@@ -59,14 +59,17 @@ function verifconnexion()
 </head>
 
 <body>
-    <nav>
-        <ul>
-            <?php
-            include __DIR__ . "/menu.php";
-            afficherMenu($menu);
-            ?>
-        </ul>
-    </nav>
+    <header>
+        <nav>
+            <ul>
+                <?php
+                include __DIR__ . "/menu.php";
+                afficherMenu($menu);
+                ?>
+            </ul>
+        </nav>
+    </header>
+    
     <h2>Connexion au site VentaCar</h2>
     <?php if ( verifconnexion()=="null" || verifconnexion()=="faux" ) { ?>
         <p>Mot de passe ou email erronné</p>
