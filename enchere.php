@@ -1,7 +1,7 @@
 <?php 
 require __DIR__."/pdo.php";
+require __DIR__."/session.php";
 
-var_dump($_SESSION["id"]);
 if (isset($_GET["id"])){
 
 

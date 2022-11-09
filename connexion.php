@@ -2,6 +2,7 @@
 
 
 require __DIR__ . "/pdo.php";
+require __DIR__."/session.php";
 
 function verifconnexion($pdo)
 {
@@ -33,7 +34,7 @@ function verifconnexion($pdo)
             // var_dump($id_session);
             // var_dump($_SESSION);
 
-            header("Location: http://localhost/ventacar/index.php");
+            header("Location: index.php");
        
             // echo "Le mot de passe est valide";
         } else {

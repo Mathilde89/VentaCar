@@ -2,6 +2,7 @@
 // var_dump($_POST);
 require __DIR__."/pdo.php";
 require __DIR__."/menu.php";
+require __DIR__."/session.php";
 
 $query2=$pdo->prepare("SELECT * FROM cars WHERE user_id=:user_id");
 $query2->bindValue(":user_id", $_SESSION['id'],PDO::PARAM_INT);
