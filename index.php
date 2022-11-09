@@ -1,13 +1,13 @@
 <?php
 session_start();
-var_dump($_SESSION);
+// var_dump($_SESSION);
 
 require __DIR__ . "/pdo.php";
 // JOIN cars ON listcars.id_cars=cars.id
 $query = $pdo->prepare("SELECT listcars.startingprice,listcars.id,listcars.startdate,listcars.enddate,listcars.sellingprice,cars.model,cars.powerful,cars.year,cars.description FROM `listcars`JOIN cars ON listcars.id_cars=cars.id");
 $query->execute();
 $listcars = $query->fetchAll(PDO::FETCH_ASSOC);
-var_dump($listcars)
+// var_dump($listcars)
 
 ?>
 <!DOCTYPE html>
@@ -17,6 +17,7 @@ var_dump($listcars)
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style/style.css">
     <title>Document</title>
 </head>
 
@@ -24,6 +25,7 @@ var_dump($listcars)
     <header>
 
         <nav>
+            <img src="img/VentaCar.png" width="300px" alt="">
             <ul>
                 <?php
                 include __DIR__ . "/menu.php";
@@ -53,3 +55,16 @@ var_dump($listcars)
 </body>
 
 </html>
+
+<style>
+    nav{
+        display: flex;
+        background-color: black;
+        }
+
+
+    nav:last-child{
+        display: flex;
+    }
+       
+</style>

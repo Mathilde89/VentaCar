@@ -1,12 +1,13 @@
 <?php
-var_dump($_POST);
+// var_dump($_POST);
 require __DIR__."/pdo.php";
+require __DIR__."/menu.php";
 
-$query2=$pdo->prepare("SELECT * FROM users WHERE id = :id_connecté");
-$query2->bindValue(":id_connecté", $_SESSION['id'],PDO::PARAM_INT);
+$query2=$pdo->prepare("SELECT * FROM cars WHERE user_id=:user_id");
+$query2->bindValue(":user_id", $_SESSION['id'],PDO::PARAM_INT);
 $query2->execute();
-$users=$query2->fetch(PDO::FETCH_ASSOC);
-var_dump($users);
+$cars=$query2->fetchAll(PDO::FETCH_ASSOC);
+// var_dump($cars);
 
 if(isset($_POST["submitCar"])){
 
@@ -17,14 +18,14 @@ if(isset($_POST["submitCar"])){
     $query3->bindValue(":description", $_POST["description"],PDO::PARAM_STR);
    
     $result3=$query3->execute();
-    var_dump($result3);
+    // var_dump($result3);
     
     };
 
 
 if(isset($_POST["submitAnnonce"])){
     $startdate = date('Y-m-d');
-    var_dump($startdate);
+    // var_dump($startdate);
     $query4= $pdo->prepare("INSERT INTO `listcars`(`startingprice`,`startdate`,`enddate`,`sellingprice`, `id_cars`) VALUES (:startingprice,:startdate,:enddate,:startingprice,:id_cars)");
     $query4->bindValue(":startingprice", $_POST["startingprice"],PDO::PARAM_INT);
     $query4->bindValue(":enddate", $_POST["enddate"],PDO::PARAM_STR);
@@ -64,6 +65,7 @@ if(isset($_POST["submitAnnonce"])){
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style/style.css">
     <title>Document</title>
 </head>
 <body>
@@ -71,7 +73,6 @@ if(isset($_POST["submitAnnonce"])){
 <nav>
         <ul>
             <?php
-            include __DIR__ . "/menu.php";
             afficherMenu($menu);
             ?>
         </ul>

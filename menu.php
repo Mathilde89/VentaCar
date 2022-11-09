@@ -22,13 +22,16 @@ session_start();
 
 
 
-
 function afficherMenu($menu)
 {
-    
+    "<nav>
+    <img src='img/VentaCar.png' width='300px' alt=''>
+    <ul>";
     foreach ($menu as $key => $value) {
         echo '<li><a href="'.$key.'">'.$value.'</a> </li>';
     }
+    '</ul>
+    </nav>';
 }
 ?>
 
@@ -36,4 +39,5 @@ function afficherMenu($menu)
     li{
         list-style: none;
     }
+  
 </style>
