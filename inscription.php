@@ -29,14 +29,17 @@ require __DIR__ . "/pdo.php";
 </head>
 
 <body>
-    <nav>
-        <ul>
-            <?php
-            include __DIR__ . "/menu.php";
-            afficherMenu($menu);
-            ?>
-        </ul>
-    </nav>
+    <header>
+        <nav>
+            <ul>
+                <?php
+                include __DIR__ . "/menu.php";
+                afficherMenu($menu);
+                ?>
+            </ul>
+        </nav>
+    </header>
+    
     <h2>Inscription au site VentaCar</h2>
     <form action="inscription.php" method="post">
         <label for="firstname">Prénom</label>
