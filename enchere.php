@@ -8,6 +8,7 @@ if (isset($_GET["id"])){
     $query->bindValue(':id',$_GET["id"],PDO::PARAM_INT);
     $query->execute();
     $cars = $query->fetchAll(PDO::FETCH_ASSOC);
+   
     
     
 
@@ -28,13 +29,14 @@ if (isset($_GET["id"])){
 <body>
     
 
-    
-        <ul>
-            <li>Prix de départ:<?=$cars["startingprice"]?></li>
-            <li>Début de l'enchere:<?=$cars["startdate"]?></li>
-            <li>Fin de l'enchere:<?=$cars["enddate"]?></li>
-            <li>Prix de reserve: <?=$cars["sellingprice"]?></li>
 
+        <ul>
+            <?php foreach($cars as $key => $car){ ?>
+            <li>Prix de départ:<?=$car["startingprice"]?></li>
+            <li>Début de l'enchere:<?=$car["startdate"]?></li>
+            <li>Fin de l'enchere:<?=$car["enddate"]?></li>
+            <li>Prix de reserve: <?=$car["sellingprice"]?></li>
+            <?php } ?>
             <p>Encheriseur</p>
 
    
