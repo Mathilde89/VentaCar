@@ -16,7 +16,8 @@ require __DIR__."/session.php";
             "index.php" => "Acceuil",
             "formulaireVoiture.php" => "Enregistrer ma voiture",
             "formulaireAnnonce.php" => "Créer une annonce",
-            "deconnexion.php" => "Se déconnecter"
+            "deconnexion.php" => "Se déconnecter",
+            "profil.php" => "Profil"
         ];
         
     }

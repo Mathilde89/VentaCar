@@ -1,7 +1,9 @@
 <?php 
 require __DIR__."/pdo.php";
 require __DIR__."/session.php";
-var_dump($_SESSION["id"]);
+require __DIR__."/classes/AuctionsClass.php";
+
+
 
 if (isset($_GET["id"])) {
 
@@ -17,16 +19,19 @@ if (isset($_GET["id"])) {
     if (isset($_POST["submitAuction"])) {
         $startDatePost = date('Y-m-d');
 
-
-        $query3 = $pdo->prepare("INSERT INTO `auctions` (`auctionprice`, `auctiondate`,`listcars_id`,`users_id` ) VALUES (:auctionprice, :auctiondate, :listcars_id, :users_id)");
-        //INSERT INTO `auctions` (`id`, `auctionprice`, `auctiondate`, `listcars_id`, `users_id`) VALUES (NULL, ':auctionprice', 'auctiondate', ' :listcars_id', ':users_id');
-        $query3->bindValue(":auctionprice", $_POST["auctionprice"],PDO::PARAM_INT);
-        $query3->bindValue(":auctiondate",$startDatePost,PDO::PARAM_STR);
-        $query3->bindValue(":listcars_id", $_GET["id"],PDO::PARAM_INT);
-        $query3->bindValue(":users_id", $_SESSION["id"],PDO::PARAM_INT);
-        $postAuction=$query3->execute();
+        $auction = new Auctions($_POST["auctionprice"],$startDatePost,$_GET["id"],$_SESSION["id"]);
+        $postAuction=$auction->save($pdo);
+        echo $postAuction;
+        // $query3 = $pdo->prepare("INSERT INTO `auctions` (`auctionprice`, `auctiondate`,`listcars_id`,`users_id` ) VALUES (:auctionprice, :auctiondate, :listcars_id, :users_id)");
+        // //INSERT INTO `auctions` (`id`, `auctionprice`, `auctiondate`, `listcars_id`, `users_id`) VALUES (NULL, ':auctionprice', 'auctiondate', ' :listcars_id', ':users_id');
+        // $query3->bindValue(":auctionprice", $_POST["auctionprice"],PDO::PARAM_INT);
+        // $query3->bindValue(":auctiondate",$startDatePost,PDO::PARAM_STR);
+        // $query3->bindValue(":listcars_id", $_GET["id"],PDO::PARAM_INT);
+        // $query3->bindValue(":users_id", $_SESSION["id"],PDO::PARAM_INT);
+        // $postAuction=$query3->execute();
         
     };
+
     $query2 = $pdo->prepare("SELECT `auctionprice`,`auctiondate`,`listcars_id`,`users_id`
     FROM `auctions`
     JOIN listcars
@@ -117,12 +122,6 @@ if (isset($_GET["id"])) {
 
             <label for="auctionprice">Proposer un prix:</label>
             <input type="text" id="auctionprice" name="auctionprice">
-
-            <label for="listcars_id">List car:</label>
-            <input type="text" id="listcars_id" name="listcars_id">
-
-            <label for="users_id">User ID:</label>
-            <input type="text" id="users_id" name="users_id">
 
 
 

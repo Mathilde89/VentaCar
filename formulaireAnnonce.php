@@ -3,40 +3,49 @@
 require __DIR__."/pdo.php";
 require __DIR__."/menu.php";
 require __DIR__."/session.php";
+require __DIR__."/classes/CarsClass.php";
+require __DIR__."/classes/ListCarsClass.php";
 
 $query2 = $pdo->prepare("SELECT * FROM cars WHERE user_id=:user_id");
 $query2->bindValue(":user_id", $_SESSION['id'], PDO::PARAM_INT);
 $query2->execute();
 $cars = $query2->fetchAll(PDO::FETCH_ASSOC);
+
+
+
+
 // var_dump($cars);
 
 if (isset($_POST["submitCar"])) {
 
-    $query3 = $pdo->prepare("INSERT INTO `cars`(`model`, `powerful`, `year`, `description`,`user_id`) VALUES (:model,:powerful,:annee,:description,3)");
-    $query3->bindValue(":model", $_POST["model"], PDO::PARAM_STR);
-    $query3->bindValue(":powerful", $_POST["powerful"], PDO::PARAM_INT);
-    $query3->bindValue(":annee", $_POST["year"], PDO::PARAM_INT);
-    $query3->bindValue(":description", $_POST["description"], PDO::PARAM_STR);
+    $ajoutCar= new Cars($_POST["model"],$_POST["powerful"],$_POST["year"],$_POST["description"],$_SESSION["id"]);
+    $postAuction=$ajoutCar->saveCard($pdo);
+ 
+    // $query3 = $pdo->prepare("INSERT INTO `cars`(`model`, `powerful`, `year`, `description`,`user_id`) VALUES (:model,:powerful,:annee,:description,3)");
+    // $query3->bindValue(":model", $_POST["model"], PDO::PARAM_STR);
+    // $query3->bindValue(":powerful", $_POST["powerful"], PDO::PARAM_INT);
+    // $query3->bindValue(":annee", $_POST["year"], PDO::PARAM_INT);
+    // $query3->bindValue(":description", $_POST["description"], PDO::PARAM_STR);
 
-    $result3 = $query3->execute();
+    // $result3 = $query3->execute();
     // var_dump($result3);
 
 };
 
 
 if (isset($_POST["submitAnnonce"])) {
-    $startdate = date('Y-m-d');
+    $startdate2 = date('Y-m-d');
+
+    $ajoutAnnonce = new ListCars($_POST["startingprice"],$startdate2,$_POST["enddate"],$_POST["startingprice"],$_POST["id_cars"]);
+   
+    $postAnnonce=$ajoutAnnonce->save($pdo);
+       
     // var_dump($startdate);
-    $query4 = $pdo->prepare("INSERT INTO `listcars`(`startingprice`,`startdate`,`enddate`,`sellingprice`, `id_cars`) VALUES (:startingprice,:startdate,:enddate,:startingprice,:id_cars)");
-    $query4->bindValue(":startingprice", $_POST["startingprice"], PDO::PARAM_INT);
-    $query4->bindValue(":enddate", $_POST["enddate"], PDO::PARAM_STR);
-    $query4->bindValue(":startdate", $startdate, PDO::PARAM_STR);
-    $query4->bindValue(":id_cars", $_POST["id_cars"], PDO::PARAM_INT);
-
-
-
-    $result4 = $query4->execute();
-    var_dump($result4);
+    // $query4 = $pdo->prepare("INSERT INTO `listcars`(`startingprice`,`startdate`,`enddate`,`sellingprice`, `id_cars`) VALUES (:startingprice,:startdate,:enddate,:startingprice,:id_cars)");
+    // $query4->bindValue(":startingprice", $_POST["startingprice"], PDO::PARAM_INT);
+    // $query4->bindValue(":enddate", $_POST["enddate"], PDO::PARAM_STR);
+    // $query4->bindValue(":startdate", $startdate, PDO::PARAM_STR);
+    // $query4->bindValue(":id_cars", $_POST["id_cars"], PDO::PARAM_INT);
 };
 
 function verifPostAnnonce()
