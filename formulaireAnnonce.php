@@ -1,10 +1,11 @@
 <?php
 // var_dump($_POST);
 require __DIR__."/pdo.php";
-require __DIR__."/menu.php";
 require __DIR__."/session.php";
 require __DIR__."/classes/CarsClass.php";
 require __DIR__."/classes/ListCarsClass.php";
+
+var_dump($_SESSION);
 
 $query2 = $pdo->prepare("SELECT * FROM cars WHERE user_id=:user_id");
 $query2->bindValue(":user_id", $_SESSION['id'], PDO::PARAM_INT);
@@ -12,9 +13,6 @@ $query2->execute();
 $cars = $query2->fetchAll(PDO::FETCH_ASSOC);
 
 
-
-
-// var_dump($cars);
 
 if (isset($_POST["submitCar"])) {
 
@@ -50,8 +48,6 @@ if (isset($_POST["submitAnnonce"])) {
 
 function verifPostAnnonce()
 {
-
-
     if ($_SERVER["REQUEST_METHOD"] === "POST") {
         if (isset($_POST["submitAnnonce"])) {
 
@@ -61,7 +57,7 @@ function verifPostAnnonce()
         }
     }
 };
-verifPostAnnonce();
+
 ?>
 
 <!DOCTYPE html>
@@ -76,15 +72,17 @@ verifPostAnnonce();
 </head>
 
 <body>
-    <header>
-
+<header>
         <?php
+        include __DIR__ . "/menu.php";
         afficherMenu($menu);
         ?>
 
-        <h1>Poster une annonce</h1>
     </header>
 
+
+        <h1>Poster une annonce</h1>
+    
     <section>
         <form action="formulaireAnnonce.php" method="POST">
             <select name="id_cars" placeholder="cars" id="">

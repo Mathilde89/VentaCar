@@ -12,44 +12,46 @@ function showAnnonce($pdo){
     $query = $pdo->prepare("SELECT listcars.startingprice,listcars.id,listcars.startdate,listcars.enddate,listcars.sellingprice,cars.model,cars.powerful,cars.year,cars.description FROM `listcars`JOIN cars ON listcars.id_cars=cars.id");
     $query->execute();
     $listcars = $query->fetchAll(PDO::FETCH_ASSOC);
+
     // Affichage des enchères terminées
     // var_dump($listcars);
+    // var_dump($listcars[0]["id"]);
 
     if($_POST["submitTri"]=="Enchères terminées"){
         
         foreach ($listcars as $key => $listcar) {
             if(date('Y-m-d')>$listcar["enddate"]){
-                    echo "<li>Model : ".$listcar["model"]."</li>";
+                    echo "<li>Modèle : ".$listcar["model"]."</li>";
                     echo "<li>Puissance: ".$listcar["powerful"]."chevaux fiscaux</li>";
-                    echo "<li>Année de mise en cerculation: ".$listcar["year"]."</li>";
+                    echo "<li>Année de mise en circulation: ".$listcar["year"]."</li>";
                     echo "<li>Description: ".$listcar["description"]."</li>";
-                    echo "<li>ID de lannonce ".$listcar["id"]."</li>";
-                    echo '<a href="enchere.php?id='.$listcar["id"].">Voir l'enchere</a>";
+                    echo "<li>ID de l'annonce ".$listcar["id"]."</li>";
+                    echo "<li><a href='enchere.php?id=".$listcar['id']."'>Voir l'enchère</a></li>";
                 }
         
     
         }
 
-    }else if($_POST["submitTri"]=="Enchères en cours"){
+    } else if($_POST["submitTri"]=="Enchères en cours"){
         foreach ($listcars as $key => $listcar) {
             if(date('Y-m-d')<=$listcar["enddate"]){
-                    echo "<li>Model : ".$listcar["model"]."</li>";
+                    echo "<li>Modèle : ".$listcar["model"]."</li>";
                     echo "<li>Puissance: ".$listcar["powerful"]."chevaux fiscaux</li>";
-                    echo "<li>Année de mise en cerculation: ".$listcar["year"]."</li>";
+                    echo "<li>Année de mise en circulation: ".$listcar["year"]."</li>";
                     echo "<li>Description: ".$listcar["description"]."</li>";
-                    echo "<li>ID de lannonce ".$listcar["id"]."</li>";
-                    echo '<a href="enchere.php?id='.$listcar["id"].">Voir l'enchere</a>";
+                    echo "<li>ID de l'annonce ".$listcar["id"]."</li>";
+                    echo "<li><a href='enchere.php?id=".$listcar['id']."'>Voir l'enchère</a></li>";
                 }
 
     }
     } else{
         foreach ($listcars as $key => $listcar) {
-                    echo "<li>Model : ".$listcar["model"]."</li>";
+                    echo "<li>Modèle : ".$listcar["model"]."</li>";
                     echo "<li>Puissance: ".$listcar["powerful"]."chevaux fiscaux</li>";
-                    echo "<li>Année de mise en cerculation: ".$listcar["year"]."</li>";
+                    echo "<li>Année de mise en circulation: ".$listcar["year"]."</li>";
                     echo "<li>Description: ".$listcar["description"]."</li>";
-                    echo "<li>ID de lannonce ".$listcar["id"]."</li>";
-                    echo '<a href="enchere.php?id='.$listcar["id"].">Voir l'enchere</a>";
+                    echo "<li>ID de l'annonce ".$listcar["id"]."</li>";
+                    echo "<li><a href='enchere.php?id=".$listcar['id']."'>Voir l'enchère</a></li>";
                 }
 
     }
@@ -81,6 +83,7 @@ function showAnnonce($pdo){
     </header>
 
     <h1> <i class="fa-solid fa-gavel"></i> Nos annonces</h1>
+        
     <div class="tri">
 
         <form action="index.php" method="post">
@@ -89,13 +92,13 @@ function showAnnonce($pdo){
             <input class="choix" type="submit" name="submitTri" value="Enchères terminées">
             <input class="choix" type="submit" name="submitTri" value="Enchères en cours">
         </form>
+        
     </div>
     
     
         <ul>
         <?php if(isset($_POST["submitTri"])){showAnnonce($pdo);};?>
             
-
 
         </ul>
     

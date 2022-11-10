@@ -4,7 +4,6 @@ require __DIR__."/session.php";
 require __DIR__."/classes/AuctionsClass.php";
 
 
-
 function afficheWinner($pdo){
     $query4 = $pdo->prepare("SELECT users.firstname, users.name,  MAX(`auctionprice`) as max  FROM `auctions` 
     JOIN users
