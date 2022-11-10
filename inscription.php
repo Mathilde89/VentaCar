@@ -4,7 +4,8 @@ require __DIR__ . "/pdo.php";
 require __DIR__."/session.php";
 
 // Insert la personne qui vient de s'inscrire dans la base de donnée
-if (isset($_POST["submitInscription"])) {
+if (isset($_POST["submitInscription"]) &&  $_POST["name"]!="" && $_POST["firstname"] && $_POST["email"] && $_POST["password"] ) {
+
     //Permet de crypter le mot de passe
     $passwordcrypte = password_hash($_POST["password"], PASSWORD_DEFAULT);
 

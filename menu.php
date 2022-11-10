@@ -1,6 +1,6 @@
 <?php 
 
-require __DIR__."/session.php";
+// require __DIR__."/session.php";
 
     if(!isset($_SESSION["id"])){
         $menu = [
@@ -26,7 +26,7 @@ require __DIR__."/session.php";
 function afficherMenu($menu)
 {
     echo "<nav>
-    <img src='img/VentaCar.png' width='300px' alt=''>
+    <img src='img/VentaCar.png' width='100px  alt=''>
     <ul>";
     foreach ($menu as $key => $value) {
         echo '<li><a href="'.$key.'">'.$value.'</a> </li>';

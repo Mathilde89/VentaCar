@@ -1,23 +1,27 @@
 <?php 
 require __DIR__."/pdo.php";
 require __DIR__."/session.php";
-var_dump($_SESSION["id"]);
-
-if (isset($_GET["id"])) {
 
 
-    // JOIN users ON auctions.users_id=users.id JOIN listcars ON auctions.listcars_id=listcars.id_cars
-    $query = $pdo->prepare("SELECT * FROM `listcars` WHERE id=:id");
-    $query->bindValue(':id', $_GET["id"], PDO::PARAM_INT);
-    $query->execute();
-    $cars = $query->fetch(PDO::FETCH_ASSOC);
+function afficheWinner($pdo){
+    $query4 = $pdo->prepare("SELECT users.firstname, users.name,  MAX(`auctionprice`) as max  FROM `auctions` 
+    JOIN users
+    ON auctions.users_id=users.id
+    WHERE `listcars_id` = :id;" );
+    $query4->bindValue(':id', $_GET["id"], PDO::PARAM_INT);
+    $query4->execute();
+    $winner = $query4->fetch(PDO::FETCH_ASSOC);
+    echo "Nom :".$winner["name"]." Prénom :".$winner["firstname"];
 
+}
 
+function verifAuction($pdo,$max, $cars){
+   
+    
+   if(($_POST["auctionprice"]>$cars["startingprice"]) && $_POST["auctionprice"]>$max){
 
-    if (isset($_POST["submitAuction"])) {
-        $startDatePost = date('Y-m-d');
-
-
+         $startDatePost = date('Y-m-d');
+        
         $query3 = $pdo->prepare("INSERT INTO `auctions` (`auctionprice`, `auctiondate`,`listcars_id`,`users_id` ) VALUES (:auctionprice, :auctiondate, :listcars_id, :users_id)");
         //INSERT INTO `auctions` (`id`, `auctionprice`, `auctiondate`, `listcars_id`, `users_id`) VALUES (NULL, ':auctionprice', 'auctiondate', ' :listcars_id', ':users_id');
         $query3->bindValue(":auctionprice", $_POST["auctionprice"],PDO::PARAM_INT);
@@ -25,8 +29,43 @@ if (isset($_GET["id"])) {
         $query3->bindValue(":listcars_id", $_GET["id"],PDO::PARAM_INT);
         $query3->bindValue(":users_id", $_SESSION["id"],PDO::PARAM_INT);
         $postAuction=$query3->execute();
+        // header("Location: enchere.php"); demander à Anthony pourquoi ca ne marche pas
         
+        
+        
+    } else {
+        echo "Enchère trop basse";
     };
+
+    
+}
+
+if (isset($_GET["id"])) {
+
+    $query1 = $pdo->prepare("SELECT MAX(`auctionprice`) as max FROM `auctions` WHERE `listcars_id` = :id;");
+    $query1->bindValue(':id', $_GET["id"], PDO::PARAM_INT);
+    $query1->execute();
+    $maxi = $query1->fetch(PDO::FETCH_ASSOC);
+    if($maxi["max"]==null){
+        $max=0;
+    }else{
+        $max=$maxi["max"];
+    }
+
+
+    
+    // JOIN users ON auctions.users_id=users.id JOIN listcars ON auctions.listcars_id=listcars.id_cars
+    $query = $pdo->prepare("SELECT * FROM `listcars` WHERE id=:id");
+    $query->bindValue(':id', $_GET["id"], PDO::PARAM_INT);
+    $query->execute();
+    $cars = $query->fetch(PDO::FETCH_ASSOC);
+    
+    if (isset($_POST["submitAuction"])) {
+        
+        verifAuction($pdo,$max, $cars);
+    }
+
+
     $query2 = $pdo->prepare("SELECT `auctionprice`,`auctiondate`,`listcars_id`,`users_id`
     FROM `auctions`
     JOIN listcars
@@ -37,15 +76,14 @@ if (isset($_GET["id"])) {
     $query2->execute();
     $auctions = $query2->fetchAll(PDO::FETCH_ASSOC);
     $longeur = count($auctions);
+    
+
+    
 
 
-    function getNoAuction()
-    {
-        echo '<h2>Aucun offre proposer</h2>';
-        echo '<p>Voulez vous proposer un offre ?</p>';
-    }
+
 } else {
-    echo "erreur";
+    echo "Erreur lors du chargement de la page";
 }
 
 ?>
@@ -87,49 +125,42 @@ if (isset($_GET["id"])) {
             <?php ?>
             <ul>
 
-                <li>Offre déposé:<?= $value["auctionprice"] ?></li>
+                <li>Offre déposée :<?= $value["auctionprice"] ?></li>
 
             </ul>
 
         <?php } ?>
 
-        <form action="enchere.php?id=<?= $_GET["id"] ?>" method="post">
-
-            <label for="auctionprice">Proposer un prix:</label>
-            <input type="text" id="auctionprice" name="auctionprice">
-
-
-
-
-
-
-
-            <input type="submit" value="encherire" name="submitAuction">
-        </form>
-
-
-
-    <?php } else { ?>
-        <?php
-        getNoAuction()
-        ?>
-        <form action="enchere.php?id=<?= $_GET["id"] ?>" method="post">
-
-            <label for="auctionprice">Proposer un prix:</label>
-            <input type="text" id="auctionprice" name="auctionprice">
-
-            <label for="listcars_id">List car:</label>
-            <input type="text" id="listcars_id" name="listcars_id">
-
-            <label for="users_id">User ID:</label>
-            <input type="text" id="users_id" name="users_id">
-
-
-
-
-            <input type="submit" value="encherire" name="submitAuction">
-        </form>
+        
+    <?php } else { $init=true;?>
+        <p>Il n'a pas d'encheres en cours, soyez le premier à encherir!</p>
+        
     <?php } ?>
+
+    <?php if (isset($_SESSION["id"]) ) { // Si l'utilisateur est connecté
+        if (date('Y-m-d')<$cars["enddate"]){ ?> <!--Date ok-->
+
+             <form action="enchere.php?id=<?= $_GET["id"] ?>" method="post">
+                <label for="auctionprice">Proposer un prix:</label>
+                <input type="number" id="auctionprice" name="auctionprice">
+                <input type="submit" value="Encherir" name="submitAuction">
+            </form>
+
+             <?php if (isset($_POST["submitAuction"])) {;};
+
+     
+         } else { // la date est périmée ?> 
+                <p>  La date est périmée vous ne pouvez plus faire d'enchères</p> 
+                <p>Le nouveau propriétaire est 
+                    <?php  afficheWinner($pdo); ?>
+                </p>
+            <?php };
+  
+
+        } else { // Si l'utilisateur n'est pas connecté ?> 
+           <a href="connexion.php">Vous devez vous connecter pour pouvoir encherir</a>
+
+            <?php }; ?>
 
 
 
