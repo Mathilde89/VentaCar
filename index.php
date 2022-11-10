@@ -17,7 +17,7 @@ function showAnnonce($pdo){
     // var_dump($listcars);
     // var_dump($listcars[0]["id"]);
 
-    if($_POST["submitTri"]=="Enchères terminées"){
+    if(isset($_POST["submitTri"]) && $_POST["submitTri"]=="Enchères terminées"){
         
         foreach ($listcars as $key => $listcar) {
             if(date('Y-m-d')>$listcar["enddate"]){
@@ -32,7 +32,7 @@ function showAnnonce($pdo){
     
         }
 
-    } else if($_POST["submitTri"]=="Enchères en cours"){
+    } else if(isset($_POST["submitTri"]) && $_POST["submitTri"]=="Enchères en cours"){
         foreach ($listcars as $key => $listcar) {
             if(date('Y-m-d')<=$listcar["enddate"]){
                     echo "<li>Modèle : ".$listcar["model"]."</li>";
@@ -97,7 +97,7 @@ function showAnnonce($pdo){
     
     
         <ul>
-        <?php if(isset($_POST["submitTri"])){showAnnonce($pdo);};?>
+        <?php showAnnonce($pdo);?>
             
 
         </ul>
