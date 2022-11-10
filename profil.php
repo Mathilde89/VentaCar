@@ -52,14 +52,11 @@ if (isset($_POST["modilProfil"])) {
 <body>
     
 <header>
-        <nav>
-            <ul>
-                <?php
-                include __DIR__ . "/menu.php";
-                afficherMenu($menu);
-                ?>
-            </ul>
-        </nav>
+        <?php
+        include __DIR__ . "/menu.php";
+        afficherMenu($menu);
+        ?>
+
     </header>
 
     <ul>
