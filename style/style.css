@@ -1,20 +1,18 @@
 * {
   box-sizing: border-box;
   margin: 0;
+  font-family: "Tenor Sans", sans-serif;
 }
 
-nav {
-  background-color: black;
-  display: flex;
-  height: 100px;
-}
 nav ul {
   display: flex;
+  flex-direction: row;
   width: 100%;
   align-items: center;
+  list-style: none;
 }
-nav ul li {
-  font-family: "Times New Roman", Times, serif;
+
+nav li {
   width: 30%;
   display: flex;
   flex-direction: row;
@@ -24,10 +22,21 @@ nav ul li {
   border: none;
   color: white;
 }
-nav ul li a {
+
+nav a {
+  display: flex;
+  flex-direction: row;
   border: none;
   color: white;
   text-decoration: none;
+  list-style: none;
+}
+
+nav {
+  background-color: black;
+  display: flex;
+  flex-direction: row;
+  height: 100px;
 }
 
 h1 {
@@ -44,4 +53,117 @@ input {
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  padding: 30px;
+}
+
+/* CSS */
+.choix {
+  align-self: center;
+  background-color: #fff;
+  background-image: none;
+  background-position: 0 90%;
+  background-repeat: repeat no-repeat;
+  background-size: 4px 3px;
+  border-radius: 15px 225px 255px 15px 15px 255px 225px 15px;
+  border-style: solid;
+  border-width: 2px;
+  box-shadow: rgba(0, 0, 0, 0.2) 15px 28px 25px -18px;
+  box-sizing: border-box;
+  color: #41403e;
+  cursor: pointer;
+  display: inline-block;
+  font-family: Neucha, sans-serif;
+  font-size: 1rem;
+  line-height: 23px;
+  outline: none;
+  padding: 0.75rem;
+  text-decoration: none;
+  transition: all 235ms ease-in-out;
+  border-bottom-left-radius: 15px 255px;
+  border-bottom-right-radius: 225px 15px;
+  border-top-left-radius: 255px 15px;
+  border-top-right-radius: 15px 225px;
+  -moz-user-select: none;
+   -ms-user-select: none;
+       user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.choix:hover {
+  box-shadow: rgba(0, 0, 0, 0.3) 2px 8px 8px -5px;
+  transform: translate3d(0, 2px, 0);
+}
+
+.choix:focus {
+  box-shadow: rgba(0, 0, 0, 0.3) 2px 8px 4px -6px;
+}
+
+.container ul {
+  border: 2px solid black;
+  width: 25%;
+  padding: 15px;
+  margin: 10px;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+img {
+  border: 8px solid transparent;
+}
+
+a {
+  text-align: center;
+}
+
+li {
+  list-style: none;
+}
+
+h2 {
+  text-align: center;
+}
+
+.inscon {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.inscon input {
+  width: 300px;
+  margin: 5px;
+}
+
+.infos {
+  margin: 20px;
+}
+
+.infosauction {
+  margin: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border: 2px solid black;
+}
+
+.listauctions {
+  margin: 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 5px;
+}
+
+.listauctions form, .listauctions li {
+  padding: 10px;
 }/*# sourceMappingURL=style.css.map */

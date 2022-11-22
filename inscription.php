@@ -32,7 +32,7 @@ if (isset($_POST["submitInscription"]) &&  $_POST["name"]!="" && $_POST["firstna
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style/style.css">
+    <link rel="stylesheet" href="style/style.scss">
     <title>Document</title>
 </head>
 
@@ -47,7 +47,7 @@ if (isset($_POST["submitInscription"]) &&  $_POST["name"]!="" && $_POST["firstna
     </header>
 
     <h2>Inscription au site VentaCar</h2>
-    <form action="inscription.php" method="post">
+    <form class="inscon" action="inscription.php" method="post">
         <label for="firstname">Prénom</label>
         <input type="text" id="firstname" name="firstname">
 

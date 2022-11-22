@@ -5,7 +5,7 @@ require __DIR__."/session.php";
 require __DIR__."/classes/CarsClass.php";
 require __DIR__."/classes/ListCarsClass.php";
 
-var_dump($_SESSION);
+
 
 $query2 = $pdo->prepare("SELECT * FROM cars WHERE user_id=:user_id");
 $query2->bindValue(":user_id", $_SESSION['id'], PDO::PARAM_INT);
@@ -67,7 +67,9 @@ function verifPostAnnonce()
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style/style.css">
+    <link rel="stylesheet" href="style/style.scss">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tenor+Sans&display=swap" rel="stylesheet">
     <title>Document</title>
 </head>
 
@@ -84,18 +86,29 @@ function verifPostAnnonce()
         <h1>Poster une annonce</h1>
     
     <section>
-        <form action="formulaireAnnonce.php" method="POST">
+        <div class="inscon">
+
+            <form class="inscon" action="formulaireAnnonce.php" method="POST">
+                
+                <label for="enddate">Sélectionner votre voiture :
             <select name="id_cars" placeholder="cars" id="">
+                <option name="id_cars" value="Sélectionnez votre voiture"></option>
                 <?php foreach ($cars as $key => $value) { ?>
-
+                    
                     <option name="id_cars" value="<?= $value["id"] ?>"><?php echo $value["model"] ?></option>
-                <?php }; ?>
+                    <?php }; ?>
+                    
+                </select>
+                <div class="inscon">
 
-            </select>
-            <input placeholder="Prix de départ" type="text" name="startingprice">
-            <label for="">Fin des enchères <input type="date" name="enddate"></label>
-            <input type="submit" value="Poster mon annonce" name="submitAnnonce">
-        </form>
+                    <label for="startingprice">Prix de départ :</label>
+                    <input  type="text" name="startingprice">
+                    <label for="enddate">Fin des enchères :</label>
+                            <input type="date" name="enddate">
+                            <input type="submit" value="Poster mon annonce" name="submitAnnonce">
+                        </div>
+                        </form>
+                </div>
         <?php if (verifPostAnnonce()) { ?>
             <p>Votre annonce est en ligne</p>
         <?php }; ?>

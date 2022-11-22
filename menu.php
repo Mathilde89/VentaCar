@@ -27,7 +27,7 @@
 function afficherMenu($menu)
 {
     echo "<nav>
-    <img src='img/VentaCar.png' width='100px  alt=''>
+    <img src='img/Ventacarrogne.png'   alt=''>
     <ul>";
     foreach ($menu as $key => $value) {
         echo '<li><a href="'.$key.'">'.$value.'</a> </li>';
@@ -37,15 +37,3 @@ function afficherMenu($menu)
 }
 ?>
 
-<style>
-    nav{
-    display: flex
-    }
-    li{
-        display: flex;
-        flex-direction: row;
-        list-style: none;
-        text-decoration: none;
-    }
-  
-</style>

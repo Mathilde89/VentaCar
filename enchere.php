@@ -20,13 +20,13 @@ function verifAuction($pdo,$max, $cars){
    
     
    if(($_POST["auctionprice"]>$cars["startingprice"]) && $_POST["auctionprice"]>$max){
+    
 
     if (isset($_POST["submitAuction"])) {
         $startDatePost = date('Y-m-d');
-
         $auction = new Auctions($_POST["auctionprice"],$startDatePost,$_GET["id"],$_SESSION["id"]);
         $postAuction=$auction->save($pdo);
-        echo $postAuction;
+      
         // $query3 = $pdo->prepare("INSERT INTO `auctions` (`auctionprice`, `auctiondate`,`listcars_id`,`users_id` ) VALUES (:auctionprice, :auctiondate, :listcars_id, :users_id)");
         // //INSERT INTO `auctions` (`id`, `auctionprice`, `auctiondate`, `listcars_id`, `users_id`) VALUES (NULL, ':auctionprice', 'auctiondate', ' :listcars_id', ':users_id');
         // $query3->bindValue(":auctionprice", $_POST["auctionprice"],PDO::PARAM_INT);
@@ -98,7 +98,9 @@ if (isset($_GET["id"])) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style/style.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tenor+Sans&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style/style.scss">
     <title>Document</title>
 </head>
 
@@ -111,44 +113,50 @@ if (isset($_GET["id"])) {
         ?>
 
     </header>
+    <div class="infosauction">
 
-    <ul>
-        <li>Prix de départ: <?= $cars["startingprice"] ?></li>
-        <li>Début de l'enchere: <?= $cars["startdate"] ?></li>
-        <li>Fin de l'enchere: <?= $cars["enddate"] ?></li>
-        <li>Prix de reserve: <?= $cars["sellingprice"] ?></li>
+        <h3>Informations de vente : </h3>
+        <ul>
+            <li>Prix de départ: <?= $cars["startingprice"] ?>€</li>
+            <li>Début de l'enchere: <?= $cars["startdate"] ?></li>
+            <li>Fin de l'enchere: <?= $cars["enddate"] ?></li>
+            
+            
+        </ul>
+    </div>
+    <div class="listauctions">
 
-    </ul>
-    <?php if ($longeur > 0) { ?>
-        <p>Enchere</p>
-        <?php foreach ($auctions as $key => $value) { ?>
-            <?php ?>
-            <ul>
+        <?php if ($longeur > 0) { ?>
+            <h4> Enchères</h4>
+            <?php foreach ($auctions as $key => $value) { ?>
+                <?php ?>
+                <ul>
 
-                <li>Offre déposée :<?= $value["auctionprice"] ?></li>
-
-            </ul>
-
-        <?php } ?>
-
-        
-    <?php } else { $init=true;?>
-        <p>Il n'a pas d'encheres en cours, soyez le premier à encherir!</p>
-        
-    <?php } ?>
-
-    <?php if (isset($_SESSION["id"]) ) { // Si l'utilisateur est connecté
+                    <li>Offre déposée : <?= $value["auctionprice"] ?>€</li>
+                    
+                </ul>
+                
+                <?php } ?>
+                
+                
+                <?php } else { $init=true;?>
+                    <p>Il n'a pas d'encheres en cours, soyez le premier à encherir!</p>
+                    
+                    <?php } ?>
+                    
+                    <?php if (isset($_SESSION["id"]) ) { // Si l'utilisateur est connecté
         if (date('Y-m-d')<$cars["enddate"]){ ?> <!--Date ok-->
 
-             <form action="enchere.php?id=<?= $_GET["id"] ?>" method="post">
-                <label for="auctionprice">Proposer un prix:</label>
-                <input type="number" id="auctionprice" name="auctionprice">
-                <input type="submit" value="Encherir" name="submitAuction">
-            </form>
+<form action="enchere.php?id=<?= $_GET["id"] ?>" method="post">
+    <label for="auctionprice">Proposer un prix:</label>
+    <input type="number" id="auctionprice" name="auctionprice">
+    <input type="submit" value="Encherir" name="submitAuction">
+</form>
 
-             <?php if (isset($_POST["submitAuction"])) {;};
+</div>
+<?php if (isset($_POST["submitAuction"])) {;};
 
-     
+
          } else { // la date est périmée ?> 
                 <p>  La date est périmée vous ne pouvez plus faire d'enchères</p> 
                 <p>Le nouveau propriétaire est 

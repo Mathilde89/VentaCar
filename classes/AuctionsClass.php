@@ -18,9 +18,6 @@ class Auctions{
 
     public function save($pdo){
 
-        
-
-
         $query3 = $pdo->prepare("INSERT INTO `auctions` (`auctionprice`, `auctiondate`,`listcars_id`,`users_id` ) VALUES (:auctionprice, :auctiondate, :listcars_id, :users_id)");
         $query3->bindValue(":auctionprice", $this->auctionprice,PDO::PARAM_INT);
         $query3->bindValue(":auctiondate", $this->auctiondate,PDO::PARAM_STR);

@@ -55,7 +55,9 @@ function verifconnexion($pdo)
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style/style.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tenor+Sans&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style/style.scss">
     <title>Document</title>
 </head>
 
@@ -76,7 +78,7 @@ function verifconnexion($pdo)
     <?php }; ?>
 
 
-    <form action="connexion.php" method="post">
+    <form class="inscon" action="connexion.php" method="post">
 
         <label for="email">Email</label>
         <input type="email" id="email" name="email">
